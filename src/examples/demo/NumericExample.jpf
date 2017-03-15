@@ -1,0 +1,17 @@
+target=demo.NumericExample
+classpath=${jpf-symbc}/build/examples
+sourcepath=${jpf-symbc}/src/examples
+symbolic.method = demo.NumericExample.testLogical(sym#sym)
+
+symbolic.dp=z3
+listener = .symbc.SymbolicListener
+
+search.multiple_errors=true
+
+report.console.property_violation = error,trace,snapshot
+
+#report.console.file = "D:\eclipse\output"
+
+#symbolic.debug = on 
+
+#search.class = gov.nasa.jpf.search.heuristic.BFSHeuristic
