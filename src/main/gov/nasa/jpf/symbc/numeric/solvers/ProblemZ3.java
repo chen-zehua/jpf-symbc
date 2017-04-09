@@ -733,7 +733,16 @@ public class ProblemZ3 extends ProblemGeneral {
 	    }
 	}
 
-
+	public void postWithName (Object constraint, String name) {
+		try {
+			BoolExpr cName = ctx.mkBoolConst(name);
+			solver.assertAndTrack((BoolExpr) constraint, cName);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			throw new RuntimeException("## Error Z3 \n" + e);
+		}
+	}
 	
 	// need to implement all of these
 	@Override

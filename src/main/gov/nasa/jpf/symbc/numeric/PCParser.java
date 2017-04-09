@@ -51,8 +51,10 @@ import gov.nasa.jpf.symbc.numeric.solvers.ProblemZ3;
 
 public class PCParser {
 	  static ProblemGeneral pb;
-	  static public Map<SymbolicReal, Object>	symRealVar; // a map between symbolic real variables and DP variables
-	  static Map<SymbolicInteger,Object>	symIntegerVar; // a map between symbolic variables and DP variables
+	// a map between symbolic real variables and DP variables
+	  static public Map<SymbolicReal, Object>	symRealVar;
+	// a map between symbolic variables and DP variables
+	  static Map<SymbolicInteger,Object>	symIntegerVar; 
 	  //static Boolean result; // tells whether result is satisfiable or not
 	  static int tempVars = 0; //Used to construct "or" clauses
 
@@ -339,8 +341,11 @@ public class PCParser {
 	static public boolean createDPMixedConstraint(final MixedConstraint cRef) { // TODO
 
 		final Comparator c_compRef = cRef.getComparator();
+		//左边默认为实数表达式
 		final RealExpression c_leftRef = (RealExpression)cRef.getLeft();
+		//右边默认为整数表达式
 		final IntegerExpression c_rightRef = (IntegerExpression)cRef.getRight();
+		//约束中既包含整数又包含实数的时候，默认只处理运算符为相等的情况
 		assert (c_compRef == Comparator.EQ);
 
 		if (c_leftRef instanceof SymbolicReal && c_rightRef instanceof SymbolicInteger) {
@@ -889,6 +894,7 @@ public class PCParser {
 
 	// result is in pb
 	public static ProblemGeneral parse(final PathCondition pc, final ProblemGeneral pbtosolve) {
+		//将对应的约束求解器设置为前面创建的约束求解器实例
 		pb=pbtosolve;
 		
 		
@@ -898,17 +904,22 @@ public class PCParser {
 		tempVars = 0;
 		
 		Constraint cRef = pc.header;
-
+		//迭代解析pc中的路径约束
 		while (cRef != null) {
 			boolean constraintResult = true;
-
+			//实数约束
 			if (cRef instanceof RealConstraint)
-				constraintResult= createDPRealConstraint((RealConstraint)cRef);// create choco real constraint
+				// create choco real constraint
+				constraintResult= createDPRealConstraint((RealConstraint)cRef);
+			//线性整型约束
 			else if (cRef instanceof LinearIntegerConstraint)
-				constraintResult= createDPLinearIntegerConstraint((LinearIntegerConstraint)cRef);// create choco linear integer constraint
+				// create choco linear integer constraint
+				constraintResult= createDPLinearIntegerConstraint((LinearIntegerConstraint)cRef);
+			//混合约束
 			else if (cRef instanceof MixedConstraint)
 				// System.out.println("Mixed Constraint");
 				constraintResult= createDPMixedConstraint((MixedConstraint)cRef);
+			//逻辑或线性整型约束
 			else if (cRef instanceof LogicalORLinearIntegerConstraints) {
 //				if (!(pb instanceof ProblemChoco)) {
 //					throw new RuntimeException ("String solving only works with Choco for now");
@@ -919,6 +930,7 @@ public class PCParser {
 			}
 			else {
 				//System.out.println("## Warning: Non Linear Integer Constraint (only coral can handle it)" + cRef);
+				//Z3或ProblemCoral可以处理非线性整型约束
 				if(pb instanceof ProblemCoral || pb instanceof ProblemZ3)
 					constraintResult= createDPNonLinearIntegerConstraint((NonLinearIntegerConstraint)cRef);
 				else

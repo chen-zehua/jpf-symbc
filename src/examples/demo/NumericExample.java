@@ -37,10 +37,10 @@ public class NumericExample {
 			System.out.println("a > 0");
 		else 
 			System.out.println("a < 0");
-		if(b > 0.3)
-			System.out.println("b > 0.3");
+		if(b == b || a < 2)
+			System.out.println("b == b || a < 2");
 		else
-			System.out.println("b <= 0.3");
+			System.out.println("b != b || a >= 2");
 			
 	}
 	
@@ -51,10 +51,11 @@ public class NumericExample {
 		else 
 			System.out.println("a <= c");		
 	}
+	
 	public static void main(String[] args) {
 //		test(0,0);
-//		testReal(0, 0);
-		testLogical(0, 0);
+		testReal(0, 0);
+//		testLogical(0, 0);
 
 	}
 

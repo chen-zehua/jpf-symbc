@@ -1,16 +1,19 @@
 target=demo.NumericExample
 classpath=${jpf-symbc}/build/examples
 sourcepath=${jpf-symbc}/src/examples
-symbolic.method = demo.NumericExample.testLogical(sym#sym)
+symbolic.method = demo.NumericExample.testReal(sym#sym)
 
 symbolic.dp=z3
-listener = .symbc.SymbolicListener
+listener = \
+	.symbc.SymbolicListener,\
+	.symbc.TestListener
+	
 
 search.multiple_errors=true
 
 report.console.property_violation = error,trace,snapshot
 
-#report.console.file = "D:\eclipse\output"
+report.console.file = output.txt
 
 #symbolic.debug = on 
 

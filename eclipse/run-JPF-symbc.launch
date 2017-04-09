@@ -24,5 +24,6 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="gov.nasa.jpf.tool.RunJPF"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="${resource_loc}"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jpf-symbc"/>
+<booleanAttribute key="org.eclipse.jdt.launching.STOP_IN_MAIN" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1024m -ea"/>
 </launchConfiguration>

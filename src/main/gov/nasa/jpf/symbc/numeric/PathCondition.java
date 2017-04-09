@@ -46,12 +46,18 @@ import gov.nasa.jpf.symbc.numeric.visitors.CollectVariableVisitor;
 import gov.nasa.jpf.symbc.string.StringPathCondition;
 import gov.nasa.jpf.symbc.concolic.*;
 import gov.nasa.jpf.vm.ChoiceGenerator;
+import gov.nasa.jpf.vm.Instruction;
 import gov.nasa.jpf.vm.MJIEnv;
+import gov.nasa.jpf.vm.SystemState;
+import gov.nasa.jpf.vm.Transition;
 import gov.nasa.jpf.vm.VM;
 
 // path condition contains mixed constraints of integers and reals
 
 public class PathCondition implements Comparable<PathCondition> {
+	//@zehua 添加一个标志位表示当前的PathCondition是否被需要添加的Constraint扩展
+	private boolean extended = false;
+	
     public static boolean flagSolved = false;
 
     public Constraint header;
@@ -208,6 +214,9 @@ public class PathCondition implements Comparable<PathCondition> {
      * Returns whether the condition was extended with the constraint.
      */
     public boolean prependUnlessRepeated(Constraint t) {
+    	System.out.println("+++++++++++++++++++++++ADD NEW CONSTRANT++++++++++++++++");
+    	System.out.println(t);
+    	System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     	// if Green is used and slicing is on then we always add the constraint
     	// since we assume the last constraint added is always the header
         if ((SymbolicInstructionFactory.greenSolver != null)
@@ -215,8 +224,19 @@ public class PathCondition implements Comparable<PathCondition> {
             t.and = header;
             header = t;
             count++;
+            System.out.println("*******************PathCondition NOW******************");
+            System.out.println(stringPC());
+            System.out.println("******************************************************");
+            
+            //@zehua add
+            extended = true;
+            
             return true;
         } else {
+        	
+        	//@zehua add
+        	extended = false;
+        	
             return false;
         }
     }
@@ -526,6 +546,20 @@ public class PathCondition implements Comparable<PathCondition> {
 		count--;
 		resetHashCode();
 	}
-
-
+	
+	/**
+	 * ADD BY @zehua
+	 * 在添加一条路径约束之后，设置该路径约束所代表的分支
+	 * 由前面的prependUnlessRepeated(Constraint)方法可知路径约束添加在PathCondition的首部
+	 * @param curInstr
+	 * @param targetInstr
+	 */
+	public void setHeaderBranch(Transition trail) {
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		if (extended) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			header.setTrail(trail);
+			extended = false;
+		}
+	}
 }

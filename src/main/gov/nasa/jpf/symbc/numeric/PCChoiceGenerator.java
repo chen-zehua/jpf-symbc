@@ -108,7 +108,9 @@ public class PCChoiceGenerator extends IntIntervalGenerator {
 	// sets the PC constraints for the current choice
 	public void setCurrentPC(PathCondition pc) {
 		PC.put(getNextChoice(),pc);
-
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^SET PathCondition^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println(pc);
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 	}
 	// sets the PC constraints for the specified choice
 	public void setPC(PathCondition pc, int choice) {

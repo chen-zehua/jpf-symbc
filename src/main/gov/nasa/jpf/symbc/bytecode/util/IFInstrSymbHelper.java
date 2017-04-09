@@ -22,6 +22,7 @@
 package gov.nasa.jpf.symbc.bytecode.util;
 
 
+import coral.PC;
 import gov.nasa.jpf.jvm.bytecode.IfInstruction;
 import gov.nasa.jpf.symbc.bytecode.LCMP;
 import gov.nasa.jpf.symbc.numeric.Comparator;
@@ -63,7 +64,7 @@ public class IFInstrSymbHelper {
 				pc = prevPcGen.getCurrentPC();
 			else
 				pc = new PathCondition();
-			
+		
 			PathCondition firstPC = pc.make_copy();
 			PathCondition secPC = pc.make_copy();
 			PathCondition thirdPC = pc.make_copy();
@@ -87,9 +88,13 @@ public class IFInstrSymbHelper {
 				thirdPC._addDet(thirdComparator,sym_v2,v1);
 			}
 			
-			boolean firstSat = firstPC.simplify();
-			boolean secSat = secPC.simplify();
-			boolean thirdSat = thirdPC.simplify();
+//			boolean firstSat = firstPC.simplify();
+//			boolean secSat = secPC.simplify();
+//			boolean thirdSat = thirdPC.simplify();
+			
+			//@zehua add
+			boolean firstSat, secSat, thirdSat;
+			firstSat = secSat = thirdSat = true;
 			
 			if(firstSat) {
 				if(secSat) {
@@ -132,7 +137,6 @@ public class IFInstrSymbHelper {
 				System.err.println("***********Warning: everything false");
 				ti.getVM().getSystemState().setIgnored(true);
 			}
-			
 		} else { //This branch will only be taken if there is a choice
 			
 			long v1 = ti.getModifiableTopFrame().peekLong();
@@ -176,6 +180,9 @@ public class IFInstrSymbHelper {
 					pc._addDet(thirdComparator, sym_v2, v1);
 				((PCChoiceGenerator) curCg).setCurrentPC(pc);
 			}
+			
+			//@zehua add
+			pc.setHeaderBranch(ti.getVM().getSystemState().getTrail());
 		}
 		ti.getModifiableTopFrame().popLong();
 		ti.getModifiableTopFrame().popLong();
@@ -204,7 +211,7 @@ public class IFInstrSymbHelper {
 				pc = prevPcGen.getCurrentPC();
 			else
 				pc = new PathCondition();
-			
+						
 			PathCondition firstPC = pc.make_copy();
 			PathCondition secPC = pc.make_copy();
 			PathCondition thirdPC = pc.make_copy();
@@ -228,9 +235,13 @@ public class IFInstrSymbHelper {
 				thirdPC._addDet(thirdComparator,sym_v2,v1);
 			}
 			
-			boolean firstSat = firstPC.simplify();
-			boolean secSat = secPC.simplify();
-			boolean thirdSat = thirdPC.simplify(); 
+//			boolean firstSat = firstPC.simplify();
+//			boolean secSat = secPC.simplify();
+//			boolean thirdSat = thirdPC.simplify(); 
+			
+			//test @zehua
+			boolean firstSat, secSat, thirdSat;
+			firstSat = secSat = thirdSat = true;
 			
 			if(firstSat) {
 				if(secSat) {
@@ -273,6 +284,7 @@ public class IFInstrSymbHelper {
 				System.err.println("***********Warning: everything false");
 				ti.getVM().getSystemState().setIgnored(true);
 			}
+
 		} else { //This branch will only be taken if there is a choice
 			
 			float v1 = Types.intToFloat(ti.getModifiableTopFrame().peek());
@@ -316,12 +328,14 @@ public class IFInstrSymbHelper {
 					pc._addDet(thirdComparator, sym_v2, v1);
 				((PCChoiceGenerator) curCg).setCurrentPC(pc);
 			}
+			
+			//@zehua add
+			pc.setHeaderBranch(ti.getVM().getSystemState().getTrail());
 		}
 		ti.getModifiableTopFrame().pop();
 		ti.getModifiableTopFrame().pop();
-		ti.getModifiableTopFrame().push(conditionValue, false);
+		ti.getModifiableTopFrame().push(conditionValue, false);			
 		return instr.getNext(ti);
-		
 	}
 	
 	public static Instruction getNextInstructionAndSetPCChoiceDouble(ThreadInfo ti, 
@@ -345,7 +359,7 @@ public class IFInstrSymbHelper {
 			if(prevPcGen!=null)
 				pc = prevPcGen.getCurrentPC();
 			else
-				pc = new PathCondition();
+				pc = new PathCondition();			
 			
 			PathCondition firstPC = pc.make_copy();
 			PathCondition secPC = pc.make_copy();
@@ -370,9 +384,13 @@ public class IFInstrSymbHelper {
 				thirdPC._addDet(thirdComparator,sym_v2,v1);
 			}
 			
-			boolean firstSat = firstPC.simplify();
-			boolean secSat = secPC.simplify();
-			boolean thirdSat = thirdPC.simplify();
+//			boolean firstSat = firstPC.simplify();
+//			boolean secSat = secPC.simplify();
+//			boolean thirdSat = thirdPC.simplify();
+			
+			//@zehua add
+			boolean firstSat, secSat, thirdSat;
+			firstSat = secSat = thirdSat = true;
 			
 			if(firstSat) {
 				if(secSat) {
@@ -415,6 +433,7 @@ public class IFInstrSymbHelper {
 						+ instr.getSourceLocation() + ":" + instr.getSourceLine() + "\n");
 				ti.getVM().getSystemState().setIgnored(true);
 			}
+
 		} else { //This branch will only be taken if there is a choice
 			
 			double v1 = Types.longToDouble(ti.getModifiableTopFrame().peekLong());
@@ -459,10 +478,13 @@ public class IFInstrSymbHelper {
 					pc._addDet(thirdComparator, sym_v2, v1);
 				((PCChoiceGenerator) curCg).setCurrentPC(pc);
 			}
+			
+			//@zehua add
+			pc.setHeaderBranch(ti.getVM().getSystemState().getTrail());
 		}
 		ti.getModifiableTopFrame().popLong();
 		ti.getModifiableTopFrame().popLong();
-		ti.getModifiableTopFrame().push(conditionValue, false);
+		ti.getModifiableTopFrame().push(conditionValue, false);		
 		return instr.getNext(ti);
 	}
 	
@@ -488,14 +510,18 @@ public class IFInstrSymbHelper {
 				pc = prevPcGen.getCurrentPC();
 			else
 				pc = new PathCondition();
-			
+						
 			PathCondition eqPC = pc.make_copy();
 			PathCondition nePC = pc.make_copy();
 			eqPC._addDet(trueComparator, sym_v, 0);
 			nePC._addDet(falseComparator, sym_v, 0);
 			
-			boolean eqSat = eqPC.simplify();
-			boolean neSat = nePC.simplify();
+//			boolean eqSat = eqPC.simplify();
+//			boolean neSat = nePC.simplify();
+			
+			//@zehua add
+			boolean eqSat, neSat;
+			eqSat = neSat = true;
 			
 			if(eqSat) {
 				if(neSat) {
@@ -525,13 +551,23 @@ public class IFInstrSymbHelper {
 			else
 				pc = prevCg.getCurrentPC();
 			boolean conditionValue = (Integer)curCg.getNextChoice()==1 ? true: false;
+			
+			
 			if(conditionValue) {
 				pc._addDet(trueComparator, sym_v, 0);
 				((PCChoiceGenerator) curCg).setCurrentPC(pc);
+				
+				//@zehua add
+				pc.setHeaderBranch(ti.getVM().getSystemState().getTrail());
+				
 				return instr.getTarget();
 			} else {
 				pc._addDet(falseComparator, sym_v, 0);
-				((PCChoiceGenerator) curCg).setCurrentPC(pc);
+				((PCChoiceGenerator) curCg).setCurrentPC(pc);			
+				
+				//@zehua add
+				pc.setHeaderBranch(ti.getVM().getSystemState().getTrail());
+				
 				return instr.getNext(ti);
 			}
 		}	
@@ -558,7 +594,7 @@ public class IFInstrSymbHelper {
 				pc = prevPcGen.getCurrentPC();
 			else
 				pc = new PathCondition();
-			
+						
 			PathCondition eqPC = pc.make_copy();
 			PathCondition nePC = pc.make_copy();
 			
@@ -578,8 +614,12 @@ public class IFInstrSymbHelper {
 				nePC._addDet(falseComparator, v1, sym_v2);
 			}
 
-			boolean eqSat = eqPC.simplify();
-			boolean neSat = nePC.simplify();
+//			boolean eqSat = eqPC.simplify();
+//			boolean neSat = nePC.simplify();
+			
+			//@zehua add
+			boolean eqSat, neSat;
+			eqSat = neSat = true;
 			
 			if(eqSat) {
 				if(neSat) {
@@ -613,6 +653,8 @@ public class IFInstrSymbHelper {
 				pc = prevCg.getCurrentPC();
 			
 			boolean conditionValue = (Integer)curCg.getNextChoice()==1 ? true: false;
+			
+			
 			if(conditionValue) {
 				if(sym_v1 != null){
 					if(sym_v2 != null){ //both are symbolic values
@@ -622,6 +664,10 @@ public class IFInstrSymbHelper {
 				} else
 					pc._addDet(trueComparator, v1, sym_v2);
 				((PCChoiceGenerator) curCg).setCurrentPC(pc);
+				
+				//@zehua add
+				pc.setHeaderBranch(ti.getVM().getSystemState().getTrail());
+								
 				return instr.getTarget();
 			} else {
 				if(sym_v1 != null){
@@ -632,6 +678,10 @@ public class IFInstrSymbHelper {
 				} else
 					pc._addDet(falseComparator, v1, sym_v2);
 				((PCChoiceGenerator) curCg).setCurrentPC(pc);
+				
+				//@zehua add
+				pc.setHeaderBranch(ti.getVM().getSystemState().getTrail());
+				
 				return instr.getNext(ti);
 			}
 		}		

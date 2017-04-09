@@ -42,10 +42,10 @@ public class HeuristicListener extends PropertyListenerAdapter  {
 			System.out.println("got a PC choice generator "+ n + " "+
 			((PCChoiceGenerator) cg).getNextChoice() + " "+((PCChoiceGenerator) cg).getCurrentPC());
 		
-		if(((PCChoiceGenerator) cg).getNextChoice()==0) { // replace this condition with yours
+		/*if(((PCChoiceGenerator) cg).getNextChoice()==0) { // replace this condition with yours
 			System.out.println("backtrack");
 			search.getVM().getSystemState().setIgnored(true);
-		}
+		}*/
 		
 		}
 	}

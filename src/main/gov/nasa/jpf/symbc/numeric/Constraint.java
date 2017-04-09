@@ -39,7 +39,21 @@ package gov.nasa.jpf.symbc.numeric;
 
 import java.util.Map;
 
+import gov.nasa.jpf.vm.Transition;
+
 public abstract class Constraint implements Comparable<Constraint> {
+	//增加字段trail用于记录约束所表示的分支
+	private Transition trail = null;
+	
+	public void setTrail(Transition trail) {
+		this.trail = trail;
+	}
+	
+	public Transition getTrail() {
+		return trail;
+	}
+	//---------------以上由 @zehua 添加------------------------
+	
   private final Expression left;
 
   private Comparator comp;

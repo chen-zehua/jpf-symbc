@@ -43,6 +43,7 @@ public class FCMPG extends gov.nasa.jpf.jvm.bytecode.FCMPG {
 		if (sym_v1 == null && sym_v2 == null) { // both conditions are concrete
 			return super.execute( th);
 		} else { // at least one condition is symbolic
+			
 			Instruction nxtInstr = IFInstrSymbHelper.getNextInstructionAndSetPCChoiceFloat(th, 
 																					  this, 
 																					  sym_v1,

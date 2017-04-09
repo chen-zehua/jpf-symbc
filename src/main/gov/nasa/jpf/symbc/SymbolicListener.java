@@ -628,72 +628,15 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
 	    	printMethodSummary(pw, methodSummary);
 	    }
 
-//	    publisher.publishTopicStart("Method Summaries (HTML)");
-//	    it = allSummaries.entrySet().iterator();
-//	    while (it.hasNext()){
-//	    	Map.Entry me = (Map.Entry)it.next();
-//	    	MethodSummary methodSummary = (MethodSummary)me.getValue();
-//	    	printMethodSummaryHTML(pw, methodSummary);
-//	    }
+	    publisher.publishTopicStart("Method Summaries (HTML)");
+	    it = allSummaries.entrySet().iterator();
+	    while (it.hasNext()){
+	    	Map.Entry me = (Map.Entry)it.next();
+	    	MethodSummary methodSummary = (MethodSummary)me.getValue();
+	    	printMethodSummaryHTML(pw, methodSummary);
+	    }
 	    
 	  }
-	  
-/*	@Override
-	public void stateAdvanced(Search search) {
-		VM vm = search.getVM();
-		SystemState systemState = vm.getSystemState();
-		//get last transition
-		Transition trail = systemState.getTrail();
-
-		String lastLine = null;
-		MethodInfo lastMi = null;
-		//mark a transition started
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		//iteratively process each step in the transition
-		for (Step s : trail) 
-		{
-			String line = s.getLineString();
-			//if this step has a corresponding SUT source line
-			if (line != null) 
-			{
-				//if this step's corresponding SUT source line is the same as last one
-				if (!line.equals(lastLine)) 
-				{
-					System.out.print("  ");
-					System.out.print(Left.format(s.getLocationString(), 30));
-					System.out.print(" : ");
-					System.out.println(line.trim());
-					lastLine = line;
-				}
-			}
-
-			Instruction insn = s.getInstruction();
-
-			MethodInfo mi = insn.getMethodInfo();
-			if (mi != lastMi) 
-			{
-				ClassInfo mci = mi.getClassInfo();
-				System.out.print("    ");
-				if (mci != null) 
-				{
-					System.out.print(mci.getName());
-					System.out.print(".");
-				}
-				System.out.println(mi.getUniqueName());
-				lastMi = mi;
-			}
-
-			System.out.print("      ");
-//			System.out.println(insn);
-
-		}
-	}*/
-
-/*	  @Override
-	  public void choiceGeneratorSet (VM vm, ChoiceGenerator<?> newCG) 
-	  {
-		  System.out.println(">>>>>>choiceGeneratorSet>>>>>>>:" + newCG.toString());
-	  }*/
 	  
 	  protected class MethodSummary{
 			private String methodName = "";

@@ -67,17 +67,19 @@ public class SymbolicConstraintsGeneral {
 	  protected Boolean result; // tells whether result is satisfiable or not
 	  
 	public boolean isSatisfiable(final PathCondition pc) {
+		//判断路径约束是否为空
 		if (pc == null || pc.count == 0) {
 			if (SymbolicInstructionFactory.debugMode)
 				System.out.println("## Warning: empty path condition");
 			return true;
 		}
-
+		//判断路径约束的长度是否超过做大长度，最大长度默认为Integer.MAX_VALUE，如果超过则直接返回false
 		if (pc.count() > SymbolicInstructionFactory.maxPcLength) {
 		    System.out.println("## Warning: Path condition exceeds symbolic.max_pc_length=" +
 				       SymbolicInstructionFactory.maxPcLength + ".  Pretending it is unsatisfiable.");
 		    return false;
 		}
+		//判断是否超时
 		if (SymbolicInstructionFactory.maxPcMSec > 0 && System.currentTimeMillis() - SymbolicInstructionFactory.startSystemMillis > SymbolicInstructionFactory.maxPcMSec) {
 		    System.out.println("## Warning: Exploration time exceeds symbolic.max_pc_msec=" +
 				       SymbolicInstructionFactory.maxPcMSec + ".  Pretending all paths are unsatisfiable.");
@@ -86,7 +88,7 @@ public class SymbolicConstraintsGeneral {
 
 //		if (SymbolicInstructionFactory.debugMode)
 //			System.out.println("checking: PC "+pc);
-
+		//根据conf设置的约束求解器，来创建一个约束求解器实例对象
 		final String[] dp = SymbolicInstructionFactory.dp;
 		if(dp == null) { // default: use choco
 			pb = new ProblemChoco();
