@@ -39,6 +39,9 @@ package gov.nasa.jpf.symbc.numeric.solvers;
 
 //import choco.Problem;
 import gov.nasa.jpf.symbc.numeric.RealProblem;
+
+import java.util.ArrayList;
+
 import choco.integer.*;
 import choco.integer.var.IntTerm;
 import choco.integer.var.IntTerm.*;
@@ -416,6 +419,17 @@ public class ProblemChoco extends ProblemGeneral {
 		choco.Constraint temp = (choco.Constraint) orCon;
 		pb.post(temp);
 
+	}
+
+
+	public void postWithName(Object constraint, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public ArrayList<String> getUnSatCore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

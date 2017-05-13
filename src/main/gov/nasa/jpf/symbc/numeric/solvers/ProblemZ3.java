@@ -45,6 +45,7 @@ import gov.nasa.jpf.vm.Verify;
 import proteus.dl.syntax.Real;
 
 import java.security.acl.NotOwnerException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -722,6 +723,20 @@ public class ProblemZ3 extends ProblemGeneral {
         	e.printStackTrace();
         	throw new RuntimeException("## Error Z3: " + e);
         }
+	}
+	
+	public ArrayList<String> getUnSatCore(){
+		ArrayList<String> unsatCore = new ArrayList<>();
+		try{
+			if (Status.UNSATISFIABLE == solver.check()) {
+				for (Expr e : solver.getUnsatCore()) {
+					unsatCore.add(e.toString());
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return unsatCore;
 	}
 
 	public void post(Object constraint) {

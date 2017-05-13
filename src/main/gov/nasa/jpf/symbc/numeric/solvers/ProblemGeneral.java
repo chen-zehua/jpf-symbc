@@ -37,6 +37,8 @@
 
 package gov.nasa.jpf.symbc.numeric.solvers;
 
+import java.util.ArrayList;
+
 public abstract class ProblemGeneral{
 	public abstract Object makeIntVar(String name, int min, int max);
 	public abstract Object makeRealVar(String name, double min, double max);
@@ -203,6 +205,10 @@ public abstract class ProblemGeneral{
 	public abstract int getIntValue(Object dpVar);
 
 	public abstract void post(Object constraint);
+	
+	//@zehua add
+	public abstract void postWithName(Object constraint, String name);
+	public abstract ArrayList<String> getUnSatCore();
 
 	public abstract void postLogicalOR(Object [] constraint);
 

@@ -37,6 +37,7 @@
 
 package gov.nasa.jpf.symbc.numeric;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -268,9 +269,12 @@ public class SymbolicConstraintsGeneral {
 			cleanup();
 			return true;
 		}
-		else
-			return false;
+		else{
+			//@zehua add
+			pc.unsatCore = pb.getUnSatCore();
+			return false;			
 		}
+	}
 
 	/**
 	 * The "ProblemCompare" solver calls this to

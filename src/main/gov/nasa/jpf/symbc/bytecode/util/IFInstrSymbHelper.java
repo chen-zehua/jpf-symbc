@@ -22,7 +22,6 @@
 package gov.nasa.jpf.symbc.bytecode.util;
 
 
-import coral.PC;
 import gov.nasa.jpf.jvm.bytecode.IfInstruction;
 import gov.nasa.jpf.symbc.bytecode.LCMP;
 import gov.nasa.jpf.symbc.numeric.Comparator;

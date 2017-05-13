@@ -39,6 +39,9 @@ package gov.nasa.jpf.symbc.numeric;
 
 //import za.ac.sun.cs.green.Instance;
 import za.ac.sun.cs.green.Instance;
+
+import java.util.ArrayList;
+
 import gov.nasa.jpf.symbc.SymbolicInstructionFactory;
 import gov.nasa.jpf.symbc.concolic.PCAnalyzer;
 import gov.nasa.jpf.symbc.numeric.solvers.SolverTranslator;
@@ -57,6 +60,8 @@ import gov.nasa.jpf.vm.VM;
 public class PathCondition implements Comparable<PathCondition> {
 	//@zehua 添加一个标志位表示当前的PathCondition是否被需要添加的Constraint扩展
 	private boolean extended = false;
+	//@zehua 添加域记录当前约束的不可求解核心
+	public ArrayList<String> unsatCore = null;
 	
     public static boolean flagSolved = false;
 
@@ -214,9 +219,9 @@ public class PathCondition implements Comparable<PathCondition> {
      * Returns whether the condition was extended with the constraint.
      */
     public boolean prependUnlessRepeated(Constraint t) {
-    	System.out.println("+++++++++++++++++++++++ADD NEW CONSTRANT++++++++++++++++");
+/*    	System.out.println("+++++++++++++++++++++++ADD NEW CONSTRANT++++++++++++++++");
     	System.out.println(t);
-    	System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    	System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");*/
     	// if Green is used and slicing is on then we always add the constraint
     	// since we assume the last constraint added is always the header
         if ((SymbolicInstructionFactory.greenSolver != null)
@@ -224,9 +229,9 @@ public class PathCondition implements Comparable<PathCondition> {
             t.and = header;
             header = t;
             count++;
-            System.out.println("*******************PathCondition NOW******************");
+/*            System.out.println("*******************PathCondition NOW******************");
             System.out.println(stringPC());
-            System.out.println("******************************************************");
+            System.out.println("******************************************************");*/
             
             //@zehua add
             extended = true;
@@ -555,9 +560,9 @@ public class PathCondition implements Comparable<PathCondition> {
 	 * @param targetInstr
 	 */
 	public void setHeaderBranch(Transition trail) {
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		
 		if (extended) {
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
 			header.setTrail(trail);
 			extended = false;
 		}

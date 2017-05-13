@@ -1,7 +1,7 @@
 target=demo.NumericExample
 classpath=${jpf-symbc}/build/examples
 sourcepath=${jpf-symbc}/src/examples
-symbolic.method = demo.NumericExample.testReal(sym#sym)
+symbolic.method = demo.NumericExample.test(sym#sym)
 
 symbolic.dp=z3
 listener = \

@@ -18,6 +18,8 @@
 
 package gov.nasa.jpf.symbc.numeric.solvers;
 
+import java.util.ArrayList;
+
 import choco.Choco;
 import choco.cp.model.CPModel;
 import choco.cp.solver.CPSolver;
@@ -189,6 +191,18 @@ public class ProblemChoco2 extends ProblemGeneral {
 	public void postLogicalOR(Object[] constraint) {
 		// TODO Auto-generated method stub
 		throw new RuntimeException("## Error Choco2 does not support LogicalOR");
+	}
+
+	@Override
+	public void postWithName(Object constraint, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<String> getUnSatCore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

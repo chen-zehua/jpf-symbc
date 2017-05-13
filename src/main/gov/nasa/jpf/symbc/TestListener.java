@@ -29,7 +29,7 @@ public class TestListener extends PropertyListenerAdapter {
 	
 	@Override
 	public void stateProcessed(Search search) {
-		System.out.println("============== State Processed =================");
+		System.out.println("\n============== State Processed =================");
 		ChoiceGenerator<?> curCG = search.getVM().getSystemState().getChoiceGenerator();
 		PCChoiceGenerator pcCG;
 		if (curCG instanceof PCChoiceGenerator) {
@@ -47,6 +47,7 @@ public class TestListener extends PropertyListenerAdapter {
 			while (constraint != null ) {
 				System.out.println("==================Constraint====================");
 				System.out.println(constraint);
+				System.out.println(constraint.hashCode());
 				System.out.println("==================Transition====================");
 				trail = constraint.getTrail();
 				if (trail != null) {

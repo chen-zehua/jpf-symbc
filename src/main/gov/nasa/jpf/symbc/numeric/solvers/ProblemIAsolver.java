@@ -37,6 +37,8 @@
 
 package gov.nasa.jpf.symbc.numeric.solvers;
 
+import java.util.ArrayList;
+
 import ia_math.RealInterval;
 import ia_parser.Exp;
 import ia_parser.IAParser;
@@ -348,6 +350,18 @@ public class ProblemIAsolver extends ProblemGeneral {
 	public void postLogicalOR(Object[] constraint) {
 		// TODO Auto-generated method stub
 		throw new RuntimeException("## Error IASolver does not support LogicalOR");
+	}
+
+	@Override
+	public void postWithName(Object constraint, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<String> getUnSatCore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

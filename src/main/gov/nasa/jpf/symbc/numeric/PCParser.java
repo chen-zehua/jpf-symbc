@@ -350,26 +350,40 @@ public class PCParser {
 
 		if (c_leftRef instanceof SymbolicReal && c_rightRef instanceof SymbolicInteger) {
 			//pb.post(new MixedEqXY((RealVar)(getExpression(c_leftRef)),(IntDomainVar)(getExpression(c_rightRef))));
-			pb.post(pb.mixed(getExpression(c_leftRef),getExpression(c_rightRef)));
+//			pb.post(pb.mixed(getExpression(c_leftRef),getExpression(c_rightRef)));
+			pb.postWithName(pb.mixed(getExpression(c_leftRef),getExpression(c_rightRef)),
+					String.valueOf(cRef.hashCode()));
 		}
 		else if (c_leftRef instanceof SymbolicReal) { // c_rightRef is an IntegerExpression
 			final Object tmpi = pb.makeIntVar(c_rightRef + "_" + c_rightRef.hashCode(),(int)(((SymbolicReal)c_leftRef)._min), (int)(((SymbolicReal)c_leftRef)._max));
 			if (c_rightRef instanceof IntegerConstant)
-				pb.post(pb.eq(((IntegerConstant)c_rightRef).value,tmpi));
+				//pb.post(pb.eq(((IntegerConstant)c_rightRef).value,tmpi));
+				pb.postWithName(pb.eq(((IntegerConstant)c_rightRef).value,tmpi),
+						String.valueOf(cRef.hashCode()));
 			else
-				pb.post(pb.eq(getExpression(c_rightRef),tmpi));
+				//pb.post(pb.eq(getExpression(c_rightRef),tmpi));
+				pb.postWithName(pb.eq(getExpression(c_rightRef),tmpi), 
+						String.valueOf(cRef.hashCode()));
 		    //pb.post(new MixedEqXY((RealVar)(getExpression(c_leftRef)),tmpi));
-			pb.post(pb.mixed(getExpression(c_leftRef),tmpi));
+			//pb.post(pb.mixed(getExpression(c_leftRef),tmpi));
+			pb.postWithName(pb.mixed(getExpression(c_leftRef),tmpi),
+					String.valueOf(cRef.hashCode()));
 
 		}
 		else if (c_rightRef instanceof SymbolicInteger) { // c_leftRef is a RealExpression
 			final Object tmpr = pb.makeRealVar(c_leftRef + "_" + c_leftRef.hashCode(), ((SymbolicInteger)c_rightRef)._min, ((SymbolicInteger)c_rightRef)._max);
 			if(c_leftRef instanceof RealConstant)
-				pb.post(pb.eq(tmpr, ((RealConstant)c_leftRef).value));
+//				pb.post(pb.eq(tmpr, ((RealConstant)c_leftRef).value));
+				pb.postWithName(pb.eq(tmpr, ((RealConstant)c_leftRef).value), 
+						String.valueOf(cRef.hashCode()));
 			else
-				pb.post(pb.eq(tmpr, getExpression(c_leftRef)));
+				//pb.post(pb.eq(tmpr, getExpression(c_leftRef)));
+				pb.postWithName(pb.eq(tmpr, getExpression(c_leftRef)), 
+						String.valueOf(cRef.hashCode()));
 		    //pb.post(new MixedEqXY(tmpr,(IntDomainVar)(getExpression(c_rightRef))));
-			pb.post(pb.mixed(tmpr,getExpression(c_rightRef)));
+//			pb.post(pb.mixed(tmpr,getExpression(c_rightRef)));
+			pb.postWithName(pb.mixed(tmpr,getExpression(c_rightRef)), 
+					String.valueOf(cRef.hashCode()));
 		}
 		else
 			assert(false); // should not be reachable
@@ -392,13 +406,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof RealConstant) {
-				pb.post(pb.eq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+				//pb.post(pb.eq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.eq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof RealConstant) {
-				pb.post(pb.eq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+//				pb.post(pb.eq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+				pb.postWithName(pb.eq(getExpression(c_leftRef),((RealConstant)c_rightRef).value), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			break;
 		case NE:
 			if (c_leftRef instanceof RealConstant && c_rightRef instanceof RealConstant) {
@@ -408,13 +428,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof RealConstant) {
-				pb.post(pb.neq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.neq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.neq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof RealConstant) {
-				pb.post(pb.neq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+//				pb.post(pb.neq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+				pb.postWithName(pb.neq(getExpression(c_leftRef),((RealConstant)c_rightRef).value), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				//pb.post(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			break;
 		case LT:
 			if (c_leftRef instanceof RealConstant && c_rightRef instanceof RealConstant) {
@@ -424,13 +450,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof RealConstant) {
-				pb.post(pb.lt(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.lt(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.lt(((RealConstant)c_leftRef).value,getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof RealConstant) {
-				pb.post(pb.lt(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+//				pb.post(pb.lt(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+				pb.postWithName(pb.lt(getExpression(c_leftRef),((RealConstant)c_rightRef).value), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			break;
 		case GE:
 			if (c_leftRef instanceof RealConstant && c_rightRef instanceof RealConstant) {
@@ -440,13 +472,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof RealConstant) {
-				pb.post(pb.geq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.geq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.geq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof RealConstant) {
-				pb.post(pb.geq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+//				pb.post(pb.geq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+				pb.postWithName(pb.geq(getExpression(c_leftRef),((RealConstant)c_rightRef).value), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			break;
 		case LE:
 			if (c_leftRef instanceof RealConstant && c_rightRef instanceof RealConstant) {
@@ -456,13 +494,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof RealConstant) {
-				pb.post(pb.leq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.leq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.leq(((RealConstant)c_leftRef).value,getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof RealConstant) {
-				pb.post(pb.leq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+//				pb.post(pb.leq(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+				pb.postWithName(pb.leq(getExpression(c_leftRef),((RealConstant)c_rightRef).value), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			break;
 		case GT:
 			if (c_leftRef instanceof RealConstant && c_rightRef instanceof RealConstant) {
@@ -472,13 +516,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof RealConstant) {
-				pb.post(pb.gt(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.gt(((RealConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.gt(((RealConstant)c_leftRef).value,getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof RealConstant) {
-				pb.post(pb.gt(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+//				pb.post(pb.gt(getExpression(c_leftRef),((RealConstant)c_rightRef).value));
+				pb.postWithName(pb.gt(getExpression(c_leftRef),((RealConstant)c_rightRef).value), 
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)), 
+						String.valueOf(cRef.hashCode()));
 			break;
 		}
 		return true;
@@ -691,13 +741,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.eq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.eq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.eq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.eq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.eq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.eq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case NE:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -707,13 +763,20 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.neq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.neq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.neq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
+				
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.neq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.neq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.neq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case LT:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -723,13 +786,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.lt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				//pb.post(pb.lt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.lt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.lt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				//pb.post(pb.lt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.lt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case GE:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -739,13 +808,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.geq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.geq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.geq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.geq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.geq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.geq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));				
 			break;
 		case LE:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -755,13 +830,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.leq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				//pb.post(pb.leq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.leq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.leq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.leq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.leq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case GT:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -771,13 +852,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.gt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.gt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.gt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.gt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.gt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.gt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));				
 			break;
 		}
 		return true;
@@ -799,13 +886,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.eq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.eq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.eq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.eq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.eq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.eq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.eq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case NE:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -815,13 +908,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.neq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.neq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.neq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.neq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.neq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.neq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.neq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case LT:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -831,13 +930,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.lt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.lt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.lt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.lt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.lt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.lt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.lt(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case GE:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -847,13 +952,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.geq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.geq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.geq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.geq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.geq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.geq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.geq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case LE:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -863,13 +974,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.leq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.leq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.leq(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.leq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.leq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.leq(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.leq(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		case GT:
 			if (c_leftRef instanceof IntegerConstant && c_rightRef instanceof IntegerConstant) {
@@ -879,13 +996,19 @@ public class PCParser {
 					return true;
 			}
 			else if (c_leftRef instanceof IntegerConstant) {
-				pb.post(pb.gt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+//				pb.post(pb.gt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)));
+				pb.postWithName(pb.gt(((IntegerConstant)c_leftRef).value,getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			}
 			else if (c_rightRef instanceof IntegerConstant) {
-				pb.post(pb.gt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+//				pb.post(pb.gt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value));
+				pb.postWithName(pb.gt(getExpression(c_leftRef),((IntegerConstant)c_rightRef).value),
+						String.valueOf(cRef.hashCode()));
 			}
 			else
-				pb.post(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)));
+//				pb.post(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)));
+				pb.postWithName(pb.gt(getExpression(c_leftRef),getExpression(c_rightRef)),
+						String.valueOf(cRef.hashCode()));
 			break;
 		}
 		return true;

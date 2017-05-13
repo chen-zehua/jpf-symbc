@@ -44,6 +44,9 @@ import symlib.SymIntLiteral;
 import symlib.SymLiteral;
 import symlib.SymNumber;
 import symlib.Util;
+
+import java.util.ArrayList;
+
 import coral.PC;
 import coral.solvers.Env;
 import coral.solvers.Result;
@@ -773,6 +776,18 @@ public class ProblemCoral extends ProblemGeneral {
 
 		post(orResult);
 
+	}
+
+	@Override
+	public void postWithName(Object constraint, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<String> getUnSatCore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

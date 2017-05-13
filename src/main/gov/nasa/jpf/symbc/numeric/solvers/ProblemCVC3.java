@@ -37,6 +37,8 @@
 
 package gov.nasa.jpf.symbc.numeric.solvers;
 
+import java.util.ArrayList;
+
 //TODO: problem: we do not distinguish between ints and reals?
 // still needs a lot of work: do not use!
 
@@ -891,6 +893,18 @@ public class ProblemCVC3 extends ProblemGeneral {
 
 		post(orResult);
 
+	}
+
+	@Override
+	public void postWithName(Object constraint, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<String> getUnSatCore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

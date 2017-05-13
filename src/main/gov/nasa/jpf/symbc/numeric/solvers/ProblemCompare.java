@@ -44,6 +44,7 @@ import gov.nasa.jpf.symbc.numeric.SymbolicConstraintsGeneral;
 import gov.nasa.jpf.symbc.numeric.SymbolicReal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -1558,5 +1559,17 @@ public class ProblemCompare extends ProblemGeneral {
 		// TODO Auto-generated method stub
 		throw new RuntimeException("## Error Choco2 does not support LogicalOR");
 
+	}
+
+	@Override
+	public void postWithName(Object constraint, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<String> getUnSatCore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -18,6 +18,8 @@
 
 package gov.nasa.jpf.symbc.numeric.solvers;
 
+import java.util.ArrayList;
+
 import gov.nasa.jpf.symbc.numeric.PathCondition;
 
 public class DebugSolvers extends ProblemGeneral {
@@ -863,6 +865,18 @@ public class DebugSolvers extends ProblemGeneral {
 	public void postLogicalOR(Object[] constraint) {
 		// TODO Auto-generated method stub
 		throw new RuntimeException("## Error LogicalOR not implemented");
+	}
+
+	@Override
+	public void postWithName(Object constraint, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<String> getUnSatCore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -18,17 +18,19 @@
 
 package demo;
 
-import gov.nasa.jpf.symbc.Debug;
-
 public class NumericExample {
 		
-	public static void test(int a, int b) {
-	    int c = a/(b+a -2);                
-	    if(c>0)
-	    	System.out.println(">0");
+	public static void test(int a, int b) {	                    
+	    if(a > 0)
+	    	System.out.println("a > 0");
 	    else
-	    	System.out.println("<=0");
-	    System.out.println("c "+Debug.getSymbolicIntegerValue(c));
+	    	System.out.println("a <=0");
+	    boolean bool = a < 2 && b < 0;
+	    if (bool) {
+	    	System.out.println("a < 2 && b > 0");
+	    } else {
+	    	System.out.println("!(a < 2 && b > 0)"); 
+	    } 
 	}
 	
 	public static void testReal(int a, float b){
@@ -53,8 +55,8 @@ public class NumericExample {
 	}
 	
 	public static void main(String[] args) {
-//		test(0,0);
-		testReal(0, 0);
+		test(0,0);
+//		testReal(0, 0);
 //		testLogical(0, 0);
 
 	}

@@ -187,6 +187,18 @@ public abstract class ProblemDReal extends ProblemGeneral {
 		}
 
 		private static TrueFormula TRUE = new TrueFormula();
+
+		@Override
+		public void postWithName(Object constraint, String name) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public ArrayList<String> getUnSatCore() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------
@@ -311,6 +323,17 @@ public abstract class ProblemDReal extends ProblemGeneral {
 
 		private final Real precision;
 		private static FalseFormula FALSE = new FalseFormula();
+		@Override
+		public void postWithName(Object constraint, String name) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public ArrayList<String> getUnSatCore() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------
